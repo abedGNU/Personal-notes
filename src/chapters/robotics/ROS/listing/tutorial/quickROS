@@ -1,0 +1,60 @@
+
+// create workspace
+	mkdir -p ~/catkin_ws/src
+
+	cd ~/catkin_ws/src
+
+	catkin_init_workspace
+
+	cd ~/catkin_ws/
+
+	catkin_make
+
+###################################################################################
+//To add the workspace to your ROS environment you need to source the generated setup file
+	source devel/setup.bash
+	
+	// or
+	// add it to the ~/.bashrc, in this you don't need to do it every time you open a terminal
+		echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+		source ~/.bashrc
+
+echo $ROS_PACKAGE_PATH
+###################################################################################
+
+// create a package
+	cd ~/catkin_ws/src
+	catkin_create_pkg first_tutorial std_msgs rospy roscpp
+
+// Copy node source files in first_tutorial/src
+	first_tutorial/src/talker.cpp
+	first_tutorial/src/listener.cpp
+
+################################
+// add the following to ~/catkin_ws/src/first_tutorial/CMakeLists.txt 
+
+	add_executable(talker src/talker.cpp)
+	target_link_libraries(talker ${catkin_LIBRARIES})
+
+	add_executable(listener src/listener.cpp)
+	target_link_libraries(listener ${catkin_LIBRARIES})
+
+	// This will create two executables, talker and listener, which by default will go into package directory of your devel space, located by default at ~/catkin_ws/devel/lib/<package name>.
+################################
+
+// build all packages in the workspace
+	cd ~/catkin_ws
+	catkin_make
+
+// run nodes
+	rosrun first_tutorial talker      (C++)
+	rosrun first_tutorial talker.py   (Python) 
+
+
+
+
+
+
+
+
+
