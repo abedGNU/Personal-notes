@@ -1,8 +1,12 @@
-sphinx-quickstart
+# new project
+    sphinx-quickstart
 
-sphinx-build -b html sourcedir builddir
-sphinx-build -b html src build
+# build project
+    sphinx-build -b html sourcedir builddir
+    sphinx-build -b html src build
 
-make html
+# create HTMl
+    make html
 
-make latexpdf
+# create pdf with via LaTex
+    make latexpdf

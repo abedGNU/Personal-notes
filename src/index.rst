@@ -4,20 +4,36 @@
    contain the root `toctree` directive.
 
 Personal notes!
-=======================================
-.. include:: ../README.rst
+===============
 
 .. toctree::
-   :caption: Version control
-   :maxdepth: 2
-   :numbered:
+  :caption: Development tools
+  :maxdepth: 1
+  :numbered:
 
-   chapters/version_control/git
-
+  chapters/devtools/ide
+  chapters/devtools/documenting
+  chapters/devtools/vcs
+  chapters/devtools/toolchain
 
 .. toctree::
-   :caption: Robotics
-   :maxdepth: 2
-   :numbered:
+  :caption: Embedded systems
+  :maxdepth: 1
+  :numbered:
 
-   chapters/robotics/ROS/index
+  chapters/embedded/mcu-boards
+  chapters/embedded/embedded-linux
+
+Robotics
+---------
+Mobile roobtics, ROS, embedded systems, real time operating systems
+
+.. toctree::
+  :caption: ROS
+  :maxdepth: 1
+  :numbered:
+
+  chapters/robotics/ROS/rosbasics/ros
+  chapters/robotics/ROS/rosbasics/pub-sub
+  chapters/robotics/ROS/rosbasics/serv-cli
+  chapters/robotics/ROS/rosbasics/todo
