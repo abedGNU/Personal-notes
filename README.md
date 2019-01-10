@@ -1,12 +1,26 @@
-# new project
-    sphinx-quickstart
 
-# build project
-    sphinx-build -b html sourcedir builddir
-    sphinx-build -b html src build
+Personal notes
+===============
 
-# create HTMl
-    make html
+Programming languages : C++, Python, Java, C#
 
-# create pdf with via LaTex
-    make latexpdf
+Computer vision : Opencv
+
+Machine learning
+
+Android
+
+ROS
+
+Linux programming
+
+Embedded systems: BeagleBone, Raspberry, Arduino
+
+State
+------
+Work in progress
+
+GitHubPages
+-----------
+
+https://abedgnu.github.io/Personal-notes/

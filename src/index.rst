@@ -17,6 +17,13 @@ Personal notes!
   chapters/devtools/toolchain
 
 .. toctree::
+  :caption: Programming Languages
+  :maxdepth: 1
+  :numbered:
+
+  chapters/programming/cpp
+
+.. toctree::
   :caption: Embedded systems
   :maxdepth: 1
   :numbered:
@@ -24,8 +31,18 @@ Personal notes!
   chapters/embedded/mcu-boards
   chapters/embedded/embedded-linux
 
+Computer Vision
+================
+
+Opencv
+-------
+
+Machine learning
+----------------
+
 Robotics
----------
+=========
+
 Mobile roobtics, ROS, embedded systems, real time operating systems
 
 .. toctree::
