@@ -14,7 +14,15 @@ ROS
 
 Linux programming
 
-Embedded systems: BeagleBone, Raspberry, Arduino
+Embedded systems:
+
+    BeagleBone
+    Raspberry
+    Arduino : https://github.com/abedGNU/arduinoCar
+
+Notes
+------
+Programming examples or projects will be in separate Repositories
 
 State
 ------

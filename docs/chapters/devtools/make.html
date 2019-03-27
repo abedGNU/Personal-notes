@@ -1,0 +1,471 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. GNU Make &mdash; Persona Notes 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6. Cmake" href="cmake.html" />
+    <link rel="prev" title="4. C/C++ compilation" href="toolchain.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Persona Notes
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Development tools</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ide.html">1. IDE - Integrated Development Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documenting.html">2. Documenting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vcs.html">3. Version control systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolchain.html">4. C/C++ compilation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. GNU Make</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gnu-make-getting-started">5.1. Gnu Make getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#syntax">5.2. Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#automatic-variables">5.3. Automatic Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-implicit-rules">5.4. Using Implicit Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-wildcard-characters-in-file-names">5.5. Using Wildcard Characters in File Names</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wildcard-examples">5.5.1. Wildcard Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-function-wildcard">5.5.2. The Function wildcard</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#makefile-templates">5.6. Makefile templates</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cmake.html">6. Cmake</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming Languages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/cpp/cpp.html">1. C++</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Embedded systems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../embedded/mcu-boards.html">1. MCU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../embedded/embedded-linux.html">2. Embedded linux</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ROS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../robotics/ROS/rosbasics/ros.html">1. ROS basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robotics/ROS/rosbasics/pub-sub.html">2. Publisher-Subscriber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robotics/ROS/rosbasics/serv-cli.html">3. Service and Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robotics/ROS/rosbasics/todo.html">4. TODO</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Persona Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>5. GNU Make</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/chapters/devtools/make.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gnu-make">
+<h1>5. GNU Make<a class="headerlink" href="#gnu-make" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="gnu-make-getting-started">
+<h2>5.1. Gnu Make getting started<a class="headerlink" href="#gnu-make-getting-started" title="Permalink to this headline">¶</a></h2>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">Syntax of Rules</span><a class="headerlink" href="#id19" title="Permalink to this code">¶</a></div>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nf">target</span><span class="o">:</span> <span class="n">pre</span>-<span class="n">req</span>-1 <span class="n">pre</span>-<span class="n">req</span>-2 ...
+    <span class="nb">command</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">C program</span><a class="headerlink" href="#id20" title="Permalink to this code">¶</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// hello.c</span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">makefile simple example</span><a class="headerlink" href="#id21" title="Permalink to this code">¶</a></div>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nf">hello</span><span class="o">:</span> <span class="n">hello</span>.<span class="n">o</span>
+    gcc -o hello hello.o
+
+<span class="nf">hello.o</span><span class="o">:</span> <span class="n">hello</span>.<span class="n">c</span>
+    gcc -c hello.c
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="syntax">
+<h2>5.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p>Comments : #</p>
+<p>Continuation: </p>
+<p>Phony targets : all, clean, install, …</p>
+<p>Variables :  $(CC), $(CC_FLAGS), $&#64;, $^</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">Variables</span><a class="headerlink" href="#id22" title="Permalink to this code">¶</a></div>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">files</span> <span class="o">=</span> file1 file2
+<span class="nf">some_binary</span><span class="o">:</span> <span class="k">$(</span><span class="nv">files</span><span class="k">)</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Look at this variable: &quot;</span> <span class="k">$(</span>files<span class="k">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="automatic-variables">
+<h2>5.3. Automatic Variables<a class="headerlink" href="#automatic-variables" title="Permalink to this headline">¶</a></h2>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">Automatic Variables</span><a class="headerlink" href="#id23" title="Permalink to this code">¶</a></div>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span>$@: the target filename.
+$*: the target filename without the file extension.
+$&lt;: the first prerequisite filename.
+$^: the filenames of all the prerequisites, separated by spaces, discard duplicates.
+$+: similar to $^, but includes duplicates.
+$?: the names of all prerequisites that are newer than the target, separated by spaces.
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-text">Example with automatic variables</span><a class="headerlink" href="#id24" title="Permalink to this code">¶</a></div>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nf">all</span><span class="o">:</span> <span class="n">hello</span>
+
+<span class="c"># $@ matches the target; $&lt; matches the first dependent</span>
+<span class="nf">hello</span><span class="o">:</span> <span class="n">hello</span>.<span class="n">o</span>
+    gcc -o <span class="nv">$@</span> $&lt;
+
+<span class="nf">hello.o</span><span class="o">:</span> <span class="n">hello</span>.<span class="n">c</span>
+    gcc -c $&lt;
+
+<span class="nf">clean</span><span class="o">:</span>
+    rm hello.o hello
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-implicit-rules">
+<h2>5.4. Using Implicit Rules<a class="headerlink" href="#using-implicit-rules" title="Permalink to this headline">¶</a></h2>
+<p>To allow make to find a customary method for updating a target file, all you have to do is refrain from specifying recipes yourself. Either write a rule with no recipe, or don’t write a rule at all. Then make will figure out which implicit rule to use based on which kind of source file exists or can be made.</p>
+<p>For example, suppose the makefile looks like this:</p>
+<dl class="docutils">
+<dt>foo <span class="classifier-delimiter">:</span> <span class="classifier">foo.o bar.o</span></dt>
+<dd>cc -o foo foo.o bar.o $(CFLAGS) $(LDFLAGS)</dd>
+</dl>
+<p>Because you mention foo.o but do not give a rule for it, make will automatically look for an implicit rule that tells how to update it. This happens whether or not the file foo.o currently exists.</p>
+<p>If an implicit rule is found, it can supply both a recipe and one or more prerequisites (the source files). You would want to write a rule for foo.o with no recipe if you need to specify additional prerequisites, such as header files, that the implicit rule cannot supply.</p>
+<p>Each implicit rule has a target pattern and prerequisite patterns. There may be many implicit rules with the same target pattern. For example, numerous rules make ‘.o’ files: one, from a ‘.c’ file with the C compiler; another, from a ‘.p’ file with the Pascal compiler; and so on. The rule that actually applies is the one whose prerequisites exist or can be made. So, if you have a file foo.c, make will run the C compiler; otherwise, if you have a file foo.p, make will run the Pascal compiler; and so on.</p>
+<p>Of course, when you write the makefile, you know which implicit rule you want make to use, and you know it will choose that one because you know which possible prerequisite files are supposed to exist. See Catalogue of Built-In Rules, for a catalogue of all the predefined implicit rules.</p>
+<p>Above, we said an implicit rule applies if the required prerequisites “exist or can be made”. A file “can be made” if it is mentioned explicitly in the makefile as a target or a prerequisite, or if an implicit rule can be recursively found for how to make it. When an implicit prerequisite is the result of another implicit rule, we say that chaining is occurring. See Chains of Implicit Rules.</p>
+<p>In general, make searches for an implicit rule for each target, and for each double-colon rule, that has no recipe. A file that is mentioned only as a prerequisite is considered a target whose rule specifies nothing, so implicit rule search happens for it. See Implicit Rule Search Algorithm, for the details of how the search is done.</p>
+<p>Note that explicit prerequisites do not influence implicit rule search. For example, consider this explicit rule:</p>
+<p>foo.o: foo.p</p>
+<p>The prerequisite on foo.p does not necessarily mean that make will remake foo.o according to the implicit rule to make an object file, a .o file, from a Pascal source file, a .p file. For example, if foo.c also exists, the implicit rule to make an object file from a C source file is used instead, because it appears before the Pascal rule in the list of predefined implicit rules (see Catalogue of Built-In Rules).</p>
+<p>If you do not want an implicit rule to be used for a target that has no recipe, you can give that target an empty recipe by writing a semicolon (see Defining Empty Recipes).</p>
+</div>
+<div class="section" id="using-wildcard-characters-in-file-names">
+<h2>5.5. Using Wildcard Characters in File Names<a class="headerlink" href="#using-wildcard-characters-in-file-names" title="Permalink to this headline">¶</a></h2>
+<p>A single file name can specify many files using wildcard characters. The wildcard characters in make are ‘*’, ‘?’ and ‘[…]’, the same as in the Bourne shell. For example, <a href="#id1"><span class="problematic" id="id2">*</span></a>.c specifies a list of all the files (in the working directory) whose names end in ‘.c’.</p>
+<p>Wildcard expansion is performed by make automatically in targets and in prerequisites. In recipes, the shell is responsible for wildcard expansion. In other contexts, wildcard expansion happens only if you request it explicitly with the wildcard function.</p>
+<div class="section" id="wildcard-examples">
+<h3>5.5.1. Wildcard Examples<a class="headerlink" href="#wildcard-examples" title="Permalink to this headline">¶</a></h3>
+<p>Wildcards can be used in the recipe of a rule, where they are expanded by the shell. For example, here is a rule to delete all the object files:</p>
+<dl class="docutils">
+<dt>clean:</dt>
+<dd>rm -f <a href="#id3"><span class="problematic" id="id4">*</span></a>.o</dd>
+</dl>
+<p>Wildcards are also useful in the prerequisites of a rule. With the following rule in the makefile, ‘make print’ will print all the ‘.c’ files that have changed since the last time you printed them:</p>
+<dl class="docutils">
+<dt>print: <a href="#id5"><span class="problematic" id="id6">*</span></a>.c</dt>
+<dd>lpr -p $?
+touch print</dd>
+</dl>
+<p>This rule uses print as an empty target file; see Empty Target Files to Record Events. (The automatic variable ‘$?’ is used to print only those files that have changed; see Automatic Variables.)</p>
+<p>Wildcard expansion does not happen when you define a variable. Thus, if you write this:</p>
+<p>objects = <a href="#id7"><span class="problematic" id="id8">*</span></a>.o</p>
+<p>then the value of the variable objects is the actual string ‘<a href="#id9"><span class="problematic" id="id10">*</span></a>.o’. However, if you use the value of objects in a target or prerequisite, wildcard expansion will take place there. If you use the value of objects in a recipe, the shell may perform wildcard expansion when the recipe runs. To set objects to the expansion, instead use:</p>
+<p>objects := $(wildcard <a href="#id11"><span class="problematic" id="id12">*</span></a>.o)</p>
+</div>
+<div class="section" id="the-function-wildcard">
+<h3>5.5.2. The Function wildcard<a class="headerlink" href="#the-function-wildcard" title="Permalink to this headline">¶</a></h3>
+<p>Wildcard expansion happens automatically in rules. But wildcard expansion does not normally take place when a variable is set, or inside the arguments of a function. If you want to do wildcard expansion in such places, you need to use the wildcard function, like this:</p>
+<p>$(wildcard pattern…)</p>
+<p>This string, used anywhere in a makefile, is replaced by a space-separated list of names of existing files that match one of the given file name patterns. If no existing file name matches a pattern, then that pattern is omitted from the output of the wildcard function. Note that this is different from how unmatched wildcards behave in rules, where they are used verbatim rather than ignored (see Wildcard Pitfall).</p>
+<p>One use of the wildcard function is to get a list of all the C source files in a directory, like this:</p>
+<p>$(wildcard <a href="#id13"><span class="problematic" id="id14">*</span></a>.c)</p>
+<p>We can change the list of C source files into a list of object files by replacing the ‘.c’ suffix with ‘.o’ in the result, like this:</p>
+<p>$(patsubst %.c,%.o,$(wildcard <a href="#id15"><span class="problematic" id="id16">*</span></a>.c))</p>
+<p>(Here we have used another function, patsubst. See Functions for String Substitution and Analysis.)</p>
+<p>Thus, a makefile to compile all C source files in the directory and then link them together could be written as follows:</p>
+<p>objects := $(patsubst %.c,%.o,$(wildcard <a href="#id17"><span class="problematic" id="id18">*</span></a>.c))</p>
+<dl class="docutils">
+<dt>foo <span class="classifier-delimiter">:</span> <span class="classifier">$(objects)</span></dt>
+<dd>cc -o foo $(objects)</dd>
+</dl>
+<p>(This takes advantage of the implicit rule for compiling C programs, so there is no need to write explicit rules for compiling the files. See The Two Flavors of Variables, for an explanation of ‘:=’, which is a variant of ‘=’.)</p>
+</div>
+</div>
+<div class="section" id="makefile-templates">
+<h2>5.6. Makefile templates<a class="headerlink" href="#makefile-templates" title="Permalink to this headline">¶</a></h2>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-text">A makefile for 99% of your programs</span><a class="headerlink" href="#id25" title="Permalink to this code">¶</a></div>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">src</span> <span class="o">=</span> <span class="k">$(</span>wildcard *.c<span class="k">)</span>
+<span class="nv">obj</span> <span class="o">=</span> <span class="k">$(</span>src:.c<span class="o">=</span>.o<span class="k">)</span>
+
+<span class="nv">LDFLAGS</span> <span class="o">=</span> -lGL -lglut -lpng -lz -lm
+
+<span class="nf">myprog</span><span class="o">:</span> <span class="k">$(</span><span class="nv">obj</span><span class="k">)</span>
+    <span class="k">$(</span>CC<span class="k">)</span> -o <span class="nv">$@</span> $^ <span class="k">$(</span>LDFLAGS<span class="k">)</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>
+<span class="nf">clean</span><span class="o">:</span>
+    rm -f <span class="k">$(</span>obj<span class="k">)</span> myprog
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-text">Multiple source directories</span><a class="headerlink" href="#id26" title="Permalink to this code">¶</a></div>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">csrc</span> <span class="o">=</span> <span class="k">$(</span>wildcard src/*.c<span class="k">)</span> <span class="se">\</span>
+    <span class="k">$(</span>wildcard src/engine/*.c<span class="k">)</span> <span class="se">\</span>
+    <span class="k">$(</span>wildcard src/audio/*.c<span class="k">)</span>
+
+<span class="nv">ccsrc</span> <span class="o">=</span> <span class="k">$(</span>wildcard src/*.cc<span class="k">)</span> <span class="se">\</span>
+        <span class="k">$(</span>wildcard src/engine/*.cc<span class="k">)</span> <span class="se">\</span>
+        <span class="k">$(</span>wildcard src/audio/*.cc<span class="k">)</span>
+<span class="nv">obj</span> <span class="o">=</span> <span class="k">$(</span>csrc:.c<span class="o">=</span>.o<span class="k">)</span> <span class="k">$(</span>ccsrc:.cc<span class="o">=</span>.o<span class="k">)</span>
+
+<span class="nv">LDFLAGS</span> <span class="o">=</span> -lGL -lglut -lpng -lz -lm
+
+<span class="nf">mygame</span><span class="o">:</span> <span class="k">$(</span><span class="nv">obj</span><span class="k">)</span>
+    <span class="k">$(</span>CXX<span class="k">)</span> -o <span class="nv">$@</span> $^ <span class="k">$(</span>LDFLAGS<span class="k">)</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id27">
+<div class="code-block-caption"><span class="caption-text">Makefile template</span><a class="headerlink" href="#id27" title="Permalink to this code">¶</a></div>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">CC</span>      <span class="o">:=</span> -gcc
+<span class="nv">CCFLAGS</span> <span class="o">:=</span> -Wall
+<span class="nv">LDFLAGS</span>  <span class="o">:=</span>
+<span class="nv">BUILD</span>    <span class="o">:=</span> ./build
+<span class="nv">OBJ_DIR</span>  <span class="o">:=</span> <span class="k">$(</span>BUILD<span class="k">)</span>/objects
+<span class="nv">BIN_DIR</span>  <span class="o">:=</span> <span class="k">$(</span>BUILD<span class="k">)</span>/bin
+<span class="nv">TARGET</span>   <span class="o">:=</span> program
+<span class="nv">INCLUDE</span>  <span class="o">:=</span> -Iinclude/ <span class="se">\</span>
+            -Iinclude/module1/
+<span class="nv">SRC</span>      <span class="o">:=</span>                      <span class="se">\</span>
+<span class="k">$(</span>wildcard src/module1/*.c<span class="k">)</span> <span class="se">\</span>
+<span class="k">$(</span>wildcard src/*.c<span class="k">)</span>         <span class="se">\</span>
+
+<span class="nv">OBJECTS</span> <span class="o">:=</span> <span class="k">$(</span>SRC:%.c<span class="o">=</span><span class="k">$(</span>OBJ_DIR<span class="k">)</span>/%.o<span class="k">)</span>
+
+<span class="nf">all</span><span class="o">:</span> <span class="n">build</span> <span class="k">$(</span><span class="nv">BIN_DIR</span><span class="k">)</span>/<span class="k">$(</span><span class="nv">TARGET</span><span class="k">)</span>
+
+<span class="nf">$(OBJ_DIR)/%.o</span><span class="o">:</span> %.<span class="n">c</span>
+    @mkdir -p <span class="k">$(</span>@D<span class="k">)</span>
+    <span class="k">$(</span>CC<span class="k">)</span> <span class="k">$(</span>CCFLAGS<span class="k">)</span> <span class="k">$(</span>INCLUDE<span class="k">)</span> -o <span class="nv">$@</span> -c $&lt;
+
+<span class="nf">$(BIN_DIR)/$(TARGET)</span><span class="o">:</span> <span class="k">$(</span><span class="nv">OBJECTS</span><span class="k">)</span>
+    @mkdir -p <span class="k">$(</span>@D<span class="k">)</span>
+    <span class="k">$(</span>CC<span class="k">)</span> <span class="k">$(</span>CCFLAGS<span class="k">)</span> <span class="k">$(</span>INCLUDE<span class="k">)</span> <span class="k">$(</span>LDFLAGS<span class="k">)</span> -o <span class="k">$(</span>BIN_DIR<span class="k">)</span>/<span class="k">$(</span>TARGET<span class="k">)</span> <span class="k">$(</span>OBJECTS<span class="k">)</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">all</span> <span class="n">build</span> <span class="n">clean</span> <span class="n">debug</span> <span class="n">release</span>
+
+<span class="nf">build</span><span class="o">:</span>
+    @mkdir -p <span class="k">$(</span>BIN_DIR<span class="k">)</span>
+    @mkdir -p <span class="k">$(</span>OBJ_DIR<span class="k">)</span>
+
+<span class="nf">debug</span><span class="o">:</span> <span class="n">CCFLAGS</span> += -<span class="n">DDEBUG</span> -<span class="n">g</span>
+<span class="nf">debug</span><span class="o">:</span> <span class="n">all</span>
+
+<span class="nf">release</span><span class="o">:</span> <span class="n">CCFLAGS</span> += -<span class="n">O</span>2
+<span class="nf">release</span><span class="o">:</span> <span class="n">all</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+    -@rm -rvf <span class="k">$(</span>OBJ_DIR<span class="k">)</span>/*
+    -@rm -rvf <span class="k">$(</span>BIN_DIR<span class="k">)</span>/*
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cmake.html" class="btn btn-neutral float-right" title="6. Cmake" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="toolchain.html" class="btn btn-neutral" title="4. C/C++ compilation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Abed.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

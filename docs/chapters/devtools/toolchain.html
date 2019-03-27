@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4. Toolchain &mdash; Persona Notes 1.0.0 documentation</title>
+  <title>4. C/C++ compilation &mdash; Persona Notes 1.0.0 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="1. MCU boards" href="../embedded/mcu-boards.html" />
+    <link rel="next" title="5. GNU Make" href="make.html" />
     <link rel="prev" title="3. Version control systems" href="vcs.html" /> 
 
   
@@ -83,18 +83,39 @@
 <li class="toctree-l1"><a class="reference internal" href="ide.html">1. IDE - Integrated Development Environment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="documenting.html">2. Documenting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vcs.html">3. Version control systems</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Toolchain</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#gcc">4.1. Gcc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gnu-make">4.2. Gnu Make</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cmake">4.3. Cmake</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gcc-avr">4.4. Gcc Avr</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gcc-arm">4.5. Gcc ARM</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. C/C++ compilation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gcc">4.1. Gcc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gcc-getting-started">4.1.1. Gcc getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gcc-compilation-process">4.1.2. Gcc compilation process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#various-examples">4.1.3. Various examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analyse-the-compiled-file">4.1.4. Analyse the compiled file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#libraries">4.1.5. Libraries</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#headers-h">4.1.5.1. Headers .h</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#static-library-lib-a">4.1.5.2. Static Library .lib .a</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shared-library-dll-so">4.1.5.3. Shared Library .dll .so</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#pkg-config">4.1.6. pkg-config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environment-variables">4.1.7. Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging">4.2. Debugging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gdb">4.2.1. Gdb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gcc-mcu">4.3. Gcc MCU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="make.html">5. GNU Make</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmake.html">6. Cmake</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming Languages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/cpp/cpp.html">1. C++</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Embedded systems</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../embedded/mcu-boards.html">1. MCU boards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../embedded/mcu-boards.html">1. MCU</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../embedded/embedded-linux.html">2. Embedded linux</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ROS</span></p>
@@ -148,7 +169,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>4. Toolchain</li>
+      <li>4. C/C++ compilation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -167,26 +188,122 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="toolchain">
-<h1>4. Toolchain<a class="headerlink" href="#toolchain" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="c-c-compilation">
+<h1>4. C/C++ compilation<a class="headerlink" href="#c-c-compilation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="gcc">
 <h2>4.1. Gcc<a class="headerlink" href="#gcc" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gcc-getting-started">
+<h3>4.1.1. Gcc getting started<a class="headerlink" href="#gcc-getting-started" title="Permalink to this headline">¶</a></h3>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">C program</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// hello.c</span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span> <span class="p">(</span><span class="s">&quot;hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// compile the source file hello.c. Generate the output file a.out</span>
+<span class="n">gcc</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
+
+<span class="c1">// give the output file a name</span>
+<span class="n">gcc</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">o</span> <span class="n">hello</span>
+<span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">hello</span>
+<span class="p">.</span><span class="o">/</span><span class="n">hello</span>
+</pre></div>
 </div>
-<div class="section" id="gnu-make">
-<h2>4.2. Gnu Make<a class="headerlink" href="#gnu-make" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="cmake">
-<h2>4.3. Cmake<a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h2>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">C++ program</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// hello.cpp</span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello, world!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">o</span> <span class="n">hello</span> <span class="n">hello</span><span class="p">.</span><span class="n">cpp</span>
+<span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">hello</span>
+<span class="p">.</span><span class="o">/</span><span class="n">hello</span>
+</pre></div>
 </div>
-<div class="section" id="gcc-avr">
-<h2>4.4. Gcc Avr<a class="headerlink" href="#gcc-avr" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://gcc.gnu.org/wiki/avr-gcc">https://gcc.gnu.org/wiki/avr-gcc</a></p>
-<p><a class="reference external" href="http://www.nongnu.org/avr-libc/">http://www.nongnu.org/avr-libc/</a></p>
 </div>
-<div class="section" id="gcc-arm">
-<h2>4.5. Gcc ARM<a class="headerlink" href="#gcc-arm" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads">https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads</a></p>
-<p>gcc-arm-none-eabi-</p>
+</div>
+<div class="section" id="gcc-compilation-process">
+<h3>4.1.2. Gcc compilation process<a class="headerlink" href="#gcc-compilation-process" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="various-examples">
+<h3>4.1.3. Various examples<a class="headerlink" href="#various-examples" title="Permalink to this headline">¶</a></h3>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Some compiler options</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="nl">o</span><span class="p">:</span> <span class="n">specifies</span> <span class="n">the</span> <span class="n">output</span> <span class="n">executable</span> <span class="n">filename</span><span class="p">.</span>
+<span class="o">-</span><span class="nl">Wall</span><span class="p">:</span> <span class="n">prints</span> <span class="s">&quot;all&quot;</span> <span class="n">Warning</span> <span class="n">messages</span><span class="p">.</span>
+<span class="o">-</span><span class="nl">g</span><span class="p">:</span> <span class="n">generates</span> <span class="n">additional</span> <span class="n">symbolic</span> <span class="n">debuggging</span> <span class="n">information</span> <span class="k">for</span> <span class="n">use</span> <span class="n">with</span> <span class="n">gdb</span> <span class="n">debugger</span><span class="p">.</span>
+<span class="o">-</span><span class="nl">v</span><span class="p">:</span> <span class="n">verbose</span> <span class="n">mode</span>
+<span class="o">-</span><span class="nl">S</span><span class="p">:</span> <span class="n">compile</span> <span class="n">into</span> <span class="n">assenbly</span>
+<span class="o">-</span><span class="nl">D</span><span class="p">:</span> <span class="n">macro</span> <span class="n">definition</span><span class="p">.</span> <span class="o">-</span><span class="n">Dname</span><span class="o">=</span><span class="n">value</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Examples</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">gcc</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">o</span> <span class="n">hello</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
+
+<span class="n">gcc</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">o</span> <span class="n">hello</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
+
+<span class="c1">// compile a program with 2 source files</span>
+<span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">o</span> <span class="n">myprog</span> <span class="n">file1</span><span class="p">.</span><span class="n">cpp</span> <span class="n">file2</span><span class="p">.</span><span class="n">cpp</span>
+<span class="c1">// or</span>
+<span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">c</span> <span class="n">file1</span><span class="p">.</span><span class="n">cpp</span>
+<span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">c</span> <span class="n">file2</span><span class="p">.</span><span class="n">cpp</span>
+<span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">o</span> <span class="n">myprog</span> <span class="n">file1</span><span class="p">.</span><span class="n">o</span> <span class="n">file2</span><span class="p">.</span><span class="n">o</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Cross compilation for ARM Cortex-M</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">arm</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="n">eabi</span><span class="o">-</span><span class="n">gcc</span> <span class="o">-</span><span class="n">c</span> <span class="n">test</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">mthumb</span> <span class="o">-</span><span class="n">mcpu</span><span class="o">=</span><span class="n">cortex</span><span class="o">-</span><span class="n">m4</span>
+
+<span class="n">arm</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="n">eabi</span><span class="o">-</span><span class="n">ld</span> <span class="o">-</span><span class="n">o</span> <span class="n">image</span><span class="p">.</span><span class="n">elf</span> <span class="n">object1</span><span class="p">.</span><span class="n">o</span> <span class="n">object2</span><span class="p">.</span><span class="n">o</span> <span class="o">-</span><span class="n">T</span> <span class="n">linker_script</span><span class="p">.</span><span class="n">ld</span> <span class="o">-</span><span class="n">Map</span><span class="o">=</span><span class="n">map_file</span><span class="p">.</span><span class="n">map</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="analyse-the-compiled-file">
+<h3>4.1.4. Analyse the compiled file<a class="headerlink" href="#analyse-the-compiled-file" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="libraries">
+<h3>4.1.5. Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="headers-h">
+<h4>4.1.5.1. Headers .h<a class="headerlink" href="#headers-h" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="static-library-lib-a">
+<h4>4.1.5.2. Static Library .lib .a<a class="headerlink" href="#static-library-lib-a" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="shared-library-dll-so">
+<h4>4.1.5.3. Shared Library .dll .so<a class="headerlink" href="#shared-library-dll-so" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="pkg-config">
+<h3>4.1.6. pkg-config<a class="headerlink" href="#pkg-config" title="Permalink to this headline">¶</a></h3>
+<p>gcc -o test test.c <cite>pkg-config –libs –cflags glib-2.0</cite></p>
+<p>pkg-config –libs –cflags glib-2.0</p>
+</div>
+<div class="section" id="environment-variables">
+<h3>4.1.7. Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="debugging">
+<h2>4.2. Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gdb">
+<h3>4.2.1. Gdb<a class="headerlink" href="#gdb" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="gcc-mcu">
+<h2>4.3. Gcc MCU<a class="headerlink" href="#gcc-mcu" title="Permalink to this headline">¶</a></h2>
+<p>ARM Cortex-M section in MCU</p>
 </div>
 </div>
 
@@ -198,7 +315,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../embedded/mcu-boards.html" class="btn btn-neutral float-right" title="1. MCU boards" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="make.html" class="btn btn-neutral float-right" title="5. GNU Make" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="vcs.html" class="btn btn-neutral" title="3. Version control systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

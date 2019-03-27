@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6. Cmake &mdash; Persona Notes 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1. C++" href="../programming/cpp/cpp.html" />
+    <link rel="prev" title="5. GNU Make" href="make.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Persona Notes
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Development tools</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ide.html">1. IDE - Integrated Development Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documenting.html">2. Documenting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vcs.html">3. Version control systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolchain.html">4. C/C++ compilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="make.html">5. GNU Make</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">6. Cmake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cmake-getting-started">6.1. Cmake getting started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example">6.1.1. Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variables">6.1.2. Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#specifying-header-search-paths">6.1.3. Specifying header search paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-language-standard">6.1.4. Setting language standard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-build-targets">6.1.5. Adding build targets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#including-libraries">6.1.6. Including libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-boost">6.1.7. Using Boost</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#including-sub-projects">6.1.8. Including sub-projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-custom-build-types">6.1.9. Setting custom build types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Programming Languages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/cpp/cpp.html">1. C++</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Embedded systems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../embedded/mcu-boards.html">1. MCU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../embedded/embedded-linux.html">2. Embedded linux</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ROS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../robotics/ROS/rosbasics/ros.html">1. ROS basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robotics/ROS/rosbasics/pub-sub.html">2. Publisher-Subscriber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robotics/ROS/rosbasics/serv-cli.html">3. Service and Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robotics/ROS/rosbasics/todo.html">4. TODO</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Persona Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>6. Cmake</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/chapters/devtools/cmake.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cmake">
+<h1>6. Cmake<a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="cmake-getting-started">
+<h2>6.1. Cmake getting started<a class="headerlink" href="#cmake-getting-started" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="example">
+<h3>6.1.1. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Cmake for OpenCV</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">2.8</span><span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span> <span class="s">DisplayImage</span> <span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span> <span class="s">OpenCV</span> <span class="s">REQUIRED</span> <span class="p">)</span>
+<span class="nb">include_directories</span><span class="p">(</span> <span class="o">${</span><span class="nv">OpenCV_INCLUDE_DIRS</span><span class="o">}</span> <span class="p">)</span>
+<span class="nb">add_executable</span><span class="p">(</span> <span class="s">DisplayImage</span> <span class="s">DisplayImage.cpp</span> <span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span> <span class="s">DisplayImage</span> <span class="o">${</span><span class="nv">OpenCV_LIBS</span><span class="o">}</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Cmake for Freenect</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">2.8</span> <span class="s">FATAL_ERROR</span><span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span><span class="s2">&quot;Freenect demo&quot;</span><span class="p">)</span>
+
+<span class="nb">find_package</span><span class="p">(</span><span class="s">OpenCV</span> <span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">GLUT</span> <span class="s">REQUIRED</span><span class="p">)</span>
+
+<span class="nb">find_package</span><span class="p">(</span><span class="s">Threads</span> <span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">libfreenect</span> <span class="s">REQUIRED</span><span class="p">)</span>
+
+<span class="nb">include_directories</span><span class="p">(</span><span class="s2">&quot;/usr/include/libusb-1.0/&quot;</span> <span class="s2">&quot;/usr/local/include/libfreenect/&quot;</span> <span class="o">${</span><span class="nv">PROJECT_SOURCE_DIR</span><span class="o">}</span><span class="s">/src</span> <span class="p">)</span>
+
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">maincpp</span> <span class="s">src/main.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">maincpp</span>  <span class="o">${</span><span class="nv">OpenCV_LIBS</span><span class="o">}</span>
+                            <span class="o">${</span><span class="nv">CMAKE_THREAD_LIBS_INIT</span><span class="o">}</span>
+                            <span class="o">${</span><span class="nv">FREENECT_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="variables">
+<h3>6.1.2. Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>CMake lets you create text variables. For this purpose, the set() command is used. For instance, to create a variable MY_VAR with the value “hello”, we write:</p>
+<blockquote>
+<div>set (MY_VAR “hello”)</div></blockquote>
+</div></blockquote>
+<p>To refer to a variable later on, simply enclose it in the round braces prepended by a dollar sign:</p>
+<blockquote>
+<div>set (OTHER_VAR “${MY_VAR} world!”)</div></blockquote>
+</div>
+<div class="section" id="specifying-header-search-paths">
+<h3>6.1.3. Specifying header search paths<a class="headerlink" href="#specifying-header-search-paths" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Header search paths are important for both the compiler (so that it knows where to search for headers) but also for CLion, since the IDE can index the relevant directories and provide code completion and navigation facilities on #include statements.</div></blockquote>
+<p>The compiler searches the headers in several predefined locations that are specific to the operating system being used. In addition, you can specify further directories with header files using CMake’s include_directories() command:</p>
+<blockquote>
+<div>include_directories( ${MY_SOURCE_DIR}/src )</div></blockquote>
+<p>where MY_SOURCE_DIR is the desired directory.</p>
+<p>You can control the order of inclusion of the directories with additional BEFORE and AFTER keywords. The default behavior is to append the include directory with the current item:</p>
+<blockquote>
+<div>include_directories( BEFORE ${MY_SOURCE_DIR}/src )</div></blockquote>
+</div>
+<div class="section" id="setting-language-standard">
+<h3>6.1.4. Setting language standard<a class="headerlink" href="#setting-language-standard" title="Permalink to this headline">¶</a></h3>
+<p>To enable a particular language standard, specify the desired standard in CMAKE_CXX_VARIABLE, as follows:</p>
+<blockquote>
+<div>set(CMAKE_CXX_STANDARD 11)  # enable C++11 standard</div></blockquote>
+<p>If you want to set up additional compiler-related settings, specify them in CMAKE_CXX_FLAGS:</p>
+<blockquote>
+<div>set (CMAKE_CXX_FLAGS “${CMAKE_CXX_FLAGS} -std=c++1y -Wall”)</div></blockquote>
+<p>The above command instructs the compiler to show all the compiler errors and warnings. To get the later versions of the compiler, use -std=c++1y, -std=c++1z and so on.</p>
+</div>
+<div class="section" id="adding-build-targets">
+<h3>6.1.5. Adding build targets<a class="headerlink" href="#adding-build-targets" title="Permalink to this headline">¶</a></h3>
+<p>A build target defines an executable or a library that the CMake script helps you build. A script can have more than one build target. To create an executable binary, you use the add_executable() command, i.e.,</p>
+<blockquote>
+<div>add_executable (my_executable my_source1.cpp my_source2.cpp)</div></blockquote>
+<p>where my_executable is the target name and <code class="docutils literal notranslate"><span class="pre">*.cpp</span></code> files are the source files needed to construct the final executable.</p>
+<p>If you want to build a library instead, you can use the add_library() command:</p>
+<blockquote>
+<div>add_library (my_library STATIC|SHARED|MODULE my_source.cpp)</div></blockquote>
+<p>There are three types of library that you can build:</p>
+<blockquote>
+<div><p>STATIC builds a static library, i.e. a library that gets embedded into whichever executable decides to use it.</p>
+<p>SHARED builds a shared library (.so on Linux, .dll on Windows).</p>
+<p>MODULE builds a plugin library — something that you do not link against, but can load dynamically at runtime.</p>
+</div></blockquote>
+</div>
+<div class="section" id="including-libraries">
+<h3>6.1.6. Including libraries<a class="headerlink" href="#including-libraries" title="Permalink to this headline">¶</a></h3>
+<p>Here’s how you actually make use of a library. As the first step, you need to instruct the compiler to find a desired library and its components:
+find_package (my_library COMPONENTS REQUIRED component1 component2  OPTIONAL_COMPONENTS opt_component)
+In this example, option REQUIRED determines component1 and component2 as the mandatory components for a project. The component opt_component is qualified as an optional one; this means, that compilation can proceeded regardless of whether the optional component is actually available.</p>
+<p>Next up, you need to link an executable to the located library:
+target_link_libraries (my_target my_library another_library)
+Note, that target_link_libraries() shall be placed after add_executable() command.</p>
+</div>
+<div class="section" id="using-boost">
+<h3>6.1.7. Using Boost<a class="headerlink" href="#using-boost" title="Permalink to this headline">¶</a></h3>
+<p>The Boost libraries are the most popular C++ library set. While many libraries are header-only (meaning you don’t need to perform any linking, just include a few files), some libraries do, in fact, require compilation and linking.</p>
+<p>So let’s get started by including the files. For this, you can use CLion’s incboost live template, which will generate the following:
+find_package(Boost)
+IF (Boost_FOUND)
+include_directories(${Boost_INCLUDE_DIR})
+endif()</p>
+<p>Now, when it comes to libraries, Boost offers you options for both static and dynamic linking. There are also additional options, such as whether or not you want to enable multithreading (feel free to read up on this option, since it doesn’t actually make code parallel). Also, you can cherry-pick which Boost components you want:
+set (Boost_USE_STATIC_LIBS OFF) # enable dynamic linking
+set (Boost_USE_MULTITHREAD ON)  # enable multithreading
+find_package (Boost COMPONENTS REQUIRED chrono filesystem)
+And finally, to get the libraries, you use the good old target_link_libraries() command:
+target_link_libraries (my_target my_library another_library)</p>
+<p>An alternative approach to using libraries is to use an external dependencies manager that can use CMake to configure and build projects.</p>
+</div>
+<div class="section" id="including-sub-projects">
+<h3>6.1.8. Including sub-projects<a class="headerlink" href="#including-sub-projects" title="Permalink to this headline">¶</a></h3>
+<p>Projects can have dependencies to other projects. CMake does not have the notion of a ‘solution’ — instead, it allows you to define dependencies between projects. Typically, you want to organize your multi-project workspace such that:</p>
+<blockquote>
+<div><p>When opening the main project, the IDE shall open all the dependant projects as well.</p>
+<p>All the settings of the main project shall be applied to the dependant projects automatically.</p>
+<p>All the smart features (e.g refactoring, code completion, etc) shall take effect in all the projects.</p>
+</div></blockquote>
+<p>The above points can be achieved with proper configuration of the CMakeLists file. Essentially, you need to organize your projects as a tree of subdirectories with the top-level CMakeLists.txt file in the root directory. Then, each subdirectory of that tree shall represent a single sub-project and contain its own CMakeLists.txt file, which is then included to the main project in the top-level CMakeLists.txt file, as follows:</p>
+<blockquote>
+<div>add_subdirectory (project1) # including project1 into the main project
+add_subdirectory (project2) # including project2 into the main project</div></blockquote>
+</div>
+<div class="section" id="setting-custom-build-types">
+<h3>6.1.9. Setting custom build types<a class="headerlink" href="#setting-custom-build-types" title="Permalink to this headline">¶</a></h3>
+<p>You can extend the list of available build types with custom ones by setting them explicitly in CMakeLists.txt.</p>
+<p>To adjust the list of build types, specify the CMAKE_CONFIGURATION_TYPES variable, for example</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">CMAKE_CONFIGURATION_TYPES</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">3.6</span><span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span><span class="s">exampleProject</span><span class="p">)</span>
+
+<span class="c"># setting two custom build types</span>
+<span class="c"># variable CMAKE_CONFIGURATION_TYPES shall be defined prior to other definitions:</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CONFIGURATION_TYPES</span> <span class="s2">&quot;CustomType1;CustomType2&quot;</span> <span class="s">CACHE</span> <span class="s">STRING</span> <span class="s2">&quot;&quot;</span> <span class="s">FORCE</span><span class="p">)</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD</span> <span class="s">11</span><span class="p">)</span>                     <span class="c"># setting the language standard</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">SOURCE_FILES</span> <span class="s">main.cpp</span><span class="p">)</span>
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">exampleProject</span> <span class="o">${</span><span class="nv">SOURCE_FILES</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../programming/cpp/cpp.html" class="btn btn-neutral float-right" title="1. C++" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="make.html" class="btn btn-neutral" title="5. GNU Make" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Abed.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

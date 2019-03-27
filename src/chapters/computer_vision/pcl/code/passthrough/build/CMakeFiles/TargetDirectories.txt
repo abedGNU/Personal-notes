@@ -1,0 +1,3 @@
+/mnt/sda1/rec_diskgenius_ok/500_Abed/300_MyGitRepo/100_Personal_repo/Personal notes/src/chapters/computer_vision/pcl/code/passthrough/build/CMakeFiles/rebuild_cache.dir
+/mnt/sda1/rec_diskgenius_ok/500_Abed/300_MyGitRepo/100_Personal_repo/Personal notes/src/chapters/computer_vision/pcl/code/passthrough/build/CMakeFiles/passthrough.dir
+/mnt/sda1/rec_diskgenius_ok/500_Abed/300_MyGitRepo/100_Personal_repo/Personal notes/src/chapters/computer_vision/pcl/code/passthrough/build/CMakeFiles/edit_cache.dir

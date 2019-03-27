@@ -7,6 +7,13 @@ Personal notes!
 ===============
 
 .. toctree::
+  :caption: Basics
+  :maxdepth: 1
+  :numbered:
+
+  chapters/Basics/Basics
+
+.. toctree::
   :caption: Development tools
   :maxdepth: 1
   :numbered:
@@ -15,13 +22,15 @@ Personal notes!
   chapters/devtools/documenting
   chapters/devtools/vcs
   chapters/devtools/toolchain
+  chapters/devtools/make
+  chapters/devtools/cmake
 
 .. toctree::
   :caption: Programming Languages
   :maxdepth: 1
   :numbered:
 
-  chapters/programming/cpp
+  chapters/programming/cpp/cpp
 
 .. toctree::
   :caption: Embedded systems
